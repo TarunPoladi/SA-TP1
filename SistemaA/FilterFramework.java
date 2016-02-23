@@ -305,10 +305,10 @@ public class FilterFramework extends Thread
 		try
 		{
 			for(int i = 0; i <= numberInputPort; i++){
-				InputReadPort.close();
+				InputReadPort.get(i).close();
 			}
 			for(int i = 0; i <= numberOutputPort;i++ )
-				OutputWritePort.close();
+				OutputWritePort.get(i).close();
 
 		}
 		catch( Exception Error )
