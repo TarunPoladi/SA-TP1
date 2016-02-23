@@ -101,26 +101,6 @@ public class FilterFramework extends Thread
 	*
 	****************************************************************************/
 
-	/*----Copy-------void Connect( FilterFramework Filter )
-	{
-		try
-		{
-			// Connect this filter's input to the upstream pipe's output stream
-
-
-				
-				InputReadPort.connect( Filter.OutputWritePort );
-				InputFilter = Filter;
-			
-		} // try
-
-		catch( Exception Error )
-		{
-			System.out.println( "\n" + this.getName() + " FilterFramework error connecting::"+ Error );
-
-		} // catch
-
-	} // Connect*/
 
 	public int getAvaliableInputPort(){
 
