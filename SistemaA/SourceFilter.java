@@ -23,6 +23,12 @@ public class SourceFilter extends FilterFramework
 {
 
 
+	SourceFilter(int input,int output){
+	
+		super(input,output);
+	
+	}
+	
 	public void run()
     {
 
@@ -49,6 +55,7 @@ public class SourceFilter extends FilterFramework
 			while(true)
 			{
 				databyte = in.readByte();
+				System.out.println((long) in.readByte());
 				bytesread++;
 				WriteFilterOutputPort(databyte);
 				byteswritten++;
