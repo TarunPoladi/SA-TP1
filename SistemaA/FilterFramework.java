@@ -41,7 +41,7 @@ public class FilterFramework extends Thread
 {
 	// Define filter input and output ports
 
-	private ArrayList<PipedInputStream> InputReadPort = new ArrayList<PipedInputStream>();
+	private ArrayList<PipedOutputStream> InputReadPort = new ArrayList<PipedInputStream>();
 	private ArrayList<PipedOutputStream> OutputWritePort = new ArrayList<PipedOutputStream>();
 	private int numberInputPort = -1;
 	private int numberOutputPort = -1;
@@ -169,17 +169,18 @@ public class FilterFramework extends Thread
 
 		try
 		{
-			while (InputReadPort.available()==0 )
-			{
-				if (EndOfInputStream())
+			for(int i = 0; i <= numberInputPort;i++){
+				while (InputReadPort.get(i).available()==0 )
 				{
-					throw new EndOfStreamException("End of input stream reached");
+					if (EndOfInputStream(InputReadPort.get(i)))
+					{
+						throw new EndOfStreamException("End of input stream reached");
 
-				} //if
+					} //if
 
-				sleep(250);
-
-			} // while
+					sleep(250);
+				} // while
+			}
 
 		} // try
 
@@ -202,8 +203,10 @@ public class FilterFramework extends Thread
 
 		try
 		{
-			datum = (byte)InputReadPort.read();
-			return datum;
+			for(int i = 0; i <= numberInputPort;i++){
+				datum = (byte)InputReadPort.get(i).read();
+				return datum;
+			}
 
 		} // try
 
@@ -234,8 +237,10 @@ public class FilterFramework extends Thread
 	{
 		try
 		{
-            OutputWritePort.write((int) datum );
-		   	OutputWritePort.flush();
+			for(int i = 0 ; i <= numberOutputPort;i++ )
+            	OutputWritePort.get(i).write((int) datum );
+		   		OutputWritePort.get(i)flush();
+		   	}
 
 		} // try
 
@@ -266,8 +271,9 @@ public class FilterFramework extends Thread
 	*
 	****************************************************************************/
 
-	private boolean EndOfInputStream()
+	private boolean EndOfInputStream(InputFilter)
 	{
+
 		if (InputFilter.isAlive())
 		{
 			return false;
@@ -298,8 +304,11 @@ public class FilterFramework extends Thread
 	{
 		try
 		{
-			InputReadPort.close();
-			OutputWritePort.close();
+			for(int i = 0; i <= numberInputPort; i++){
+				InputReadPort.close();
+			}
+			for(int i = 0; i <= numberOutputPort;i++ )
+				OutputWritePort.close();
 
 		}
 		catch( Exception Error )

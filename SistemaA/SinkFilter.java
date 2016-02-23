@@ -28,6 +28,10 @@ import java.text.SimpleDateFormat;		// This class is used to format and write ti
 
 public class SinkFilter extends FilterFramework
 {
+	SinkFilter(int input,int output){
+		super(input,output);
+		
+	}
 	public void run()
     {
 		/************************************************************************************
