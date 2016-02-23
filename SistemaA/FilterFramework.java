@@ -237,7 +237,7 @@ public class FilterFramework extends Thread
 	{
 		try
 		{
-			for(int i = 0 ; i <= numberOutputPort;i++ )
+			for(int i = 0 ; i <= numberOutputPort;i++ ){
             	OutputWritePort.get(i).write((int) datum );
 		   		OutputWritePort.get(i)flush();
 		   	}
