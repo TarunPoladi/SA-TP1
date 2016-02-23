@@ -18,12 +18,14 @@
 *
 ******************************************************************************************************************/
 
-public class MiddleFilter extends FilterFramework
+public class AltitudeFilter extends FilterFramework
 {
+	AltitudeFilter(int input,int output){
+		super(input,output);
+	}
+
 	public void run()
     {
-
-
 		int bytesread = 0;					// Number of bytes read from the input file.
 		int byteswritten = 0;				// Number of bytes written to the stream.
 		byte databyte = 0;					// The byte of data read from the file

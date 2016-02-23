@@ -52,7 +52,7 @@ public class Plumber
 		sourceFilter.start();
 		temperatureFilter.start();
 		altitudeFilter.start();
-		sinkFilter.start();
+		sinkFilter.start();*/
    } // main
 
 } // Plumber

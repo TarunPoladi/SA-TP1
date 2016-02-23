@@ -237,7 +237,11 @@ public class FilterFramework extends Thread
 	{
 		try
 		{
+<<<<<<< HEAD
 			for(int i = 0 ; i <= numberOutputPort;i++ ){
+=======
+			for(int i = 0 ; i <= numberOutputPort;i++ )
+>>>>>>> 3631adb37664c3984bfa82df3c1a0f23c2d78407
             	OutputWritePort.get(i).write((int) datum );
 		   		OutputWritePort.get(i)flush();
 		   	}
@@ -305,10 +309,17 @@ public class FilterFramework extends Thread
 		try
 		{
 			for(int i = 0; i <= numberInputPort; i++){
+<<<<<<< HEAD
 				InputReadPort.get(i).close();
 			}
 			for(int i = 0; i <= numberOutputPort;i++ )
 				OutputWritePort.get(i).close();
+=======
+				InputReadPort.close();
+			}
+			for(int i = 0; i <= numberOutputPort;i++ )
+				OutputWritePort.close();
+>>>>>>> 3631adb37664c3984bfa82df3c1a0f23c2d78407
 
 		}
 		catch( Exception Error )

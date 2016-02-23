@@ -18,10 +18,10 @@
 *
 ******************************************************************************************************************/
 
-public class temperatureFilter extends FilterFramework
+public class TemperatureFilter extends FilterFramework
 {
 
-	temperatureFilter(int intput,int output){
+	TemperatureFilter(int intput,int output){
 		super(input,output);
 	}
 
