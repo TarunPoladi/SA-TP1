@@ -1,37 +1,7 @@
-/******************************************************************************************************************
-* File:SinkFilter.java
-* Course: 17655
-* Project: Assignment 1
-* Copyright: Copyright (c) 2003 Carnegie Mellon University
-* Versions:
-*	1.0 November 2008 - Sample Pipe and Filter code (ajl).
-*
-* Description:
-*
-* This class serves as an example for using the SinkFilterTemplate for creating a sink filter. This particular
-* filter reads some input from the filter's input port and does the following:
-*
-*	1) It parses the input stream and "decommutates" the measurement ID
-*	2) It parses the input steam for measurments and "decommutates" measurements, storing the bits in a long word.
-*
-* This filter illustrates how to convert the byte stream data from the upstream filterinto useable data found in
-* the stream: namely time (long type) and measurements (double type).
-*
-*
-* Parameters: 	None
-*
-* Internal Methods: None
-*
-******************************************************************************************************************/
-import java.util.*;						// This class is used to interpret time words
-import java.text.SimpleDateFormat;		// This class is used to format and write time in a string format.
 
-public class SinkFilter extends FilterFramework
+
+public class TemperatureFilter extends FilterFramework
 {
-	SinkFilter(int input,int output){
-		super(input,output);
-		
-	}
 	public void run()
     {
 		/************************************************************************************
@@ -40,8 +10,7 @@ public class SinkFilter extends FilterFramework
 		*	to the terminal.
 		*************************************************************************************/
 
-		Calendar TimeStamp = Calendar.getInstance();
-		SimpleDateFormat TimeStampFormat = new SimpleDateFormat("yyyy MM dd::hh:mm:ss:SSS");
+		
 
 		int MeasurementLength = 8;		// This is the length of all measurements (including time) in bytes
 		int IdLength = 4;				// This is the length of IDs in the byte stream
@@ -83,7 +52,7 @@ public class SinkFilter extends FilterFramework
 					} // if
 
 					bytesread++;						// Increment the byte count
-
+					WriteFilterOutputPort(databyte);
 				} // for
 
 				/****************************************************************************
@@ -100,6 +69,7 @@ public class SinkFilter extends FilterFramework
 
 				measurement = 0;
 
+
 				for (i=0; i<MeasurementLength; i++ )
 				{
 					databyte = ReadFilterInputPort();
@@ -113,7 +83,26 @@ public class SinkFilter extends FilterFramework
 
 					bytesread++;									// Increment the byte count
 
-				} // if
+				}// if
+
+
+				if ( id == 4 ){
+
+					measurement = transformTemperature(measurement);
+				
+					for(i = MeasurementLength - 1; i >= 0; i--){
+
+						databyte = (byte) (measurement >> 8*i);
+						WriteFilterOutputPort(databyte);	
+					}	
+				}
+				else{
+					for(i = MeasurementLength - 1; i >= 0; i--){
+
+						databyte = (byte)(measurement >> 8*i);
+						WriteFilterOutputPort(databyte);	
+					}	
+				}
 
 				/****************************************************************************
 				// Here we look for an ID of 0 which indicates this is a time measurement.
@@ -125,30 +114,6 @@ public class SinkFilter extends FilterFramework
 				// dealing with time arithmetically or for string display purposes. This is
 				// illustrated below.
 				****************************************************************************/
-
-				if ( id == 0 )
-				{
-					TimeStamp.setTimeInMillis(measurement);
-
-				} // if
-
-				/****************************************************************************
-				// Here we pick up a measurement (ID = 4 in this case), but you can pick up
-				// any measurement you want to. All measurements in the stream are
-				// decommutated by this class. Note that all data measurements are double types
-				// This illustrates how to convert the bits read from the stream into a double
-				// type. Its pretty simple using Double.longBitsToDouble(long value). So here
-				// we print the time stamp and the data associated with the ID we are interested
-				// in.
-				****************************************************************************/
-
-				if ( id == 4 )
-				{
-					System.out.print( TimeStampFormat.format(TimeStamp.getTime()) + " ID = " + id + " " + Double.longBitsToDouble(measurement) );
-
-				} // if
-
-				System.out.print( "\n" );
 
 			} // try
 
@@ -169,5 +134,14 @@ public class SinkFilter extends FilterFramework
 		} // while
 
    } // run
+    public long transformTemperature(long measurement){
 
+    		double posMeasurement = Double.longBitsToDouble(measurement) ;
+
+    		 System.out.print("Before Transformation  " +  posMeasurement + "\n");
+			 posMeasurement = ((posMeasurement- 32) * 0.5556);
+			 System.out.println("After Transformation   " +  posMeasurement + "\n");
+
+			 return Double.doubleToLongBits(posMeasurement);
+   }
 } // SingFilter

@@ -140,9 +140,11 @@ public class SinkFilter extends FilterFramework
 
 				if ( id == 4 )
 				{
+					
 					System.out.print( TimeStampFormat.format(TimeStamp.getTime()) + " ID = " + id + " " + Double.longBitsToDouble(measurement) );
 
 				} // if
+				
 
 				System.out.print( "\n" );
 
