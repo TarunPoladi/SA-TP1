@@ -83,7 +83,7 @@ public class FilterFramework extends Thread {
             InputReadPort.get(inputPort).connect(Filter.OutputWritePort.get(outputPort));
             InputFilter[inputPort] = Filter;
         } catch (Exception Error) {
-            System.out.println("\n" + this.getName() + " FilterFramework error connecting::" + Error);
+            System.out.println(this.getName() + " FilterFramework error connecting::" + Error);
         }
 
     } // Connect
@@ -122,7 +122,7 @@ public class FilterFramework extends Thread {
         } catch (EndOfStreamException Error) {
             throw Error;
         } catch (Exception Error) {
-            System.out.println("\n" + this.getName() + " Error in read port wait loop::" + Error);
+            System.out.println(this.getName() + " Error in read port wait loop::" + Error);
         }
 
         /**
@@ -133,7 +133,7 @@ public class FilterFramework extends Thread {
             datum = (byte) InputReadPort.get(portNumber).read();
             return datum;
         } catch (Exception Error) {
-            System.out.println("\n" + this.getName() + " Pipe read error::" + Error);
+            System.out.println(this.getName() + " Pipe read error::" + Error);
             return datum;
         }
 
@@ -151,7 +151,7 @@ public class FilterFramework extends Thread {
             OutputWritePort.get(portNumber).write((int) datum);
             OutputWritePort.get(portNumber).flush();
         } catch (Exception Error) {
-            System.out.println("\n" + this.getName() + " Pipe write error::" + Error);
+            System.out.println(this.getName() + " Pipe write error::" + Error);
         }
 
     } // WriteFilterPort
@@ -187,7 +187,7 @@ public class FilterFramework extends Thread {
             for (PipedOutputStream outputPort : OutputWritePort) outputPort.close();
 
         } catch (Exception Error) {
-            System.out.println("\n" + this.getName() + " ClosePorts error::" + Error);
+            System.out.println(this.getName() + " ClosePorts error::" + Error);
         }
 
     } // ClosePorts
