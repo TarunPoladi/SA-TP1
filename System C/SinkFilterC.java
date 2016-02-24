@@ -16,11 +16,10 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class SinkFilterA extends FilterFramework {
+public class SinkFilterC extends FilterFramework {
 
     /**
      * CONSTRUCTOR
@@ -39,7 +38,7 @@ public class SinkFilterA extends FilterFramework {
          */
 
         Calendar TimeStamp = Calendar.getInstance();
-        SimpleDateFormat TimeStampFormat = new SimpleDateFormat("yyyy:MM:dd:hh:mm:ss");
+        SimpleDateFormat TimeStampFormat = new SimpleDateFormat("hh:mm:ss.SSS");
 
         int MeasurementLength = 8;          // This is the length of all measurements (including time) in bytes
         int IdLength = 4;                   // This is the length of IDs in the byte stream
@@ -51,10 +50,7 @@ public class SinkFilterA extends FilterFramework {
         int id;                             // This is the measurement id
         int i;                              // This is a loop counter
 
-        DecimalFormat tempFormat = new DecimalFormat("###.#####");      // This is the output format for the temperature
-        DecimalFormat altFormat = new DecimalFormat("######.#####");    // This is the output format for the altitude
-        double temperature = 0;             // This is the variable to store the temperature
-        double altitude = 0;                // This is the variable to store the altitude
+
         PrintWriter out = null;             // This is the file printer reference
 
         /**
@@ -122,18 +118,9 @@ public class SinkFilterA extends FilterFramework {
                 // Catch time
                 if (id == 0) {
                     TimeStamp.setTimeInMillis(measurement);
-                }
-                // Catch altitude
-                if (id == 2) {
-                    altitude = Double.longBitsToDouble(measurement);
+                    out.println(TimeStampFormat.format(TimeStamp.getTime()));
                 }
 
-                // Catch temperature and write to file
-                if (id == 4) {
-                    temperature = Double.longBitsToDouble(measurement);
-                    out.println(TimeStampFormat.format(TimeStamp.getTime()) + "\t" + tempFormat.format(temperature) + "\t" + altFormat.format(altitude));
-
-                }
             } // try
 
             /**
