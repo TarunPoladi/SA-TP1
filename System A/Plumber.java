@@ -1,3 +1,5 @@
+package system;
+
 /**
  * File: Plumber.java
  * Project: Assignment 1
@@ -5,9 +7,9 @@
  * Description:
  * This class is the main thread that instantiates and connects a set of filters.
  *
- * Parameters: 		None
+ * Parameters:      None
  *
- * Internal Methods:	None
+ * Internal Methods:    None
  */
 
 public class Plumber {
@@ -18,7 +20,18 @@ public class Plumber {
          * filter.
          */
 
-        
+        SourceFilter source = new SourceFilter(0, 1);
+
+        Splitter split = new Splitter(3);
+
+        FilterTemplate filter1 = new FilterTemplate(1,1);
+        FilterTemplate filter2 = new FilterTemplate(1,1);
+        FilterTemplate filter3 = new FilterTemplate(1,1);
+
+        Merger merge = new Merger(3);
+
+        SinkFilterA sink = new SinkFilterA(1, 0);
+
 
         /**
          * Here we connect the filters starting with the last filter (the sink filter) and
@@ -30,12 +43,32 @@ public class Plumber {
          * of filter1 is going to be connected to the output port number 0 of filter2.
          */
 
+        sink.Connect(0, merge, 0);
 
+        merge.Connect(0, filter1, 0);
+        merge.Connect(1, filter2, 0);
+        merge.Connect(2, filter3, 0);
 
+        filter1.Connect(0, split, 0);
+        filter2.Connect(0, split, 1);
+        filter3.Connect(0, split, 2);
+
+        split.Connect(0, source, 0);
 
         /**
          * Here we start the filters up. All-in-all,... its really kind of boring.
          */
+
+        source.start();
+        split.start();
+
+        filter1.start();
+        filter2.start();
+        filter3.start();
+
+        merge.start();
+        sink.start();
+
 
 
 
