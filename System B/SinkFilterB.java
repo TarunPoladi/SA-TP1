@@ -64,7 +64,7 @@ public class SinkFilterB extends FilterFramework {
          * Initialize the printer to write to the specified file name
          */
         try {
-            out = new PrintWriter("OutputA.dat", "UTF-8");
+            out = new PrintWriter("OutputB.dat", "UTF-8");
 
         } catch (IOException e) {
             System.out.println(this.getName() + "::Problem creating output data file::" + e);

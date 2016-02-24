@@ -16,10 +16,11 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class SinkFilterC extends FilterFramework {
+public class SinkFilterWild extends FilterFramework {
 
     /**
      * CONSTRUCTOR
@@ -38,7 +39,7 @@ public class SinkFilterC extends FilterFramework {
          */
 
         Calendar TimeStamp = Calendar.getInstance();
-        SimpleDateFormat TimeStampFormat = new SimpleDateFormat("hh:mm:ss.SSS");
+        SimpleDateFormat TimeStampFormat = new SimpleDateFormat("yyyy:MM:dd:hh:mm:ss");
 
         int MeasurementLength = 8;          // This is the length of all measurements (including time) in bytes
         int IdLength = 4;                   // This is the length of IDs in the byte stream
@@ -50,14 +51,16 @@ public class SinkFilterC extends FilterFramework {
         int id;                             // This is the measurement id
         int i;                              // This is a loop counter
 
+        DecimalFormat presFormat = new DecimalFormat("##.#####");    // This is the output format for the altitude
 
+        double pressure = 0;                // This is the variable to store the pressure
         PrintWriter out = null;             // This is the file printer reference
 
         /**
          * Initialize the printer to write to the specified file name
          */
         try {
-            out = new PrintWriter("OutputC.dat", "UTF-8");
+            out = new PrintWriter("WildPoints.dat", "UTF-8");
 
         } catch (IOException e) {
             System.out.println(this.getName() + "::Problem creating output data file::" + e);
@@ -79,9 +82,9 @@ public class SinkFilterC extends FilterFramework {
                     databyte = ReadFilterInputPort(0);      // This is where we read the byte from the stream...
                     id = id | (databyte & 0xFF);            // We append the byte on to ID...
 
-                    if (i != IdLength - 1) {                 // If this is not the last byte, then slide the
+                    if (i != IdLength - 1) {                // If this is not the last byte, then slide the
                         id = id << 8;                       // previously appended byte to the left by one byte
-                        // to make room for the next byte we append to the ID
+                                                            // to make room for the next byte we append to the ID
                     } // if
 
                     bytesread++;                            // Increment the byte count
@@ -105,10 +108,10 @@ public class SinkFilterC extends FilterFramework {
                 for (i = 0; i < MeasurementLength; i++) {
                     databyte = ReadFilterInputPort(0);
                     measurement = measurement | (databyte & 0xFF);      // We append the byte on to measurement...
-                    if (i != MeasurementLength - 1) {                    // If this is not the last byte, then slide the
+                    if (i != MeasurementLength - 1) {                   // If this is not the last byte, then slide the
                         measurement = measurement << 8;                 // previously appended byte to the left by one byte
-                        // to make room for the next byte we append to the
-                        // measurement
+                                                                        // to make room for the next byte we append to the
+                                                                        // measurement
                     } // if
 
                     bytesread++;                                    // Increment the byte count
@@ -118,7 +121,12 @@ public class SinkFilterC extends FilterFramework {
                 // Catch time
                 if (id == 0) {
                     TimeStamp.setTimeInMillis(measurement);
-                    out.println(TimeStampFormat.format(TimeStamp.getTime()));
+                }
+
+                // Catch pressure and write to file
+                if(id == 3){
+                    pressure = Double.longBitsToDouble(measurement);
+                    out.println(TimeStampFormat.format(TimeStamp.getTime()) + "\t" + presFormat.format(pressure));
                 }
 
             } // try
