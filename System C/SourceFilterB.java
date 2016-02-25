@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class SourceFilterB extends FilterFramework {
 
-    SourceFilterA(int input, int output) {
+    SourceFilterB(int input, int output) {
         super(input, output);
     }
 
