@@ -58,5 +58,4 @@ public class MiddleFilter extends FilterFramework
 		} // while
 
    } // run
-
 } // MiddleFilter
