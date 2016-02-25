@@ -121,20 +121,13 @@ public class SortFilter extends FilterFramework
         Collections.sort(TimeStampList);
 
         // Send bytes to next entity
-        while (true) {
-	        try {
-	        	
-	            WriteFilterOutputPort(databyte,0);
-	            byteswritten++;
-	        }
-	        
-	        catch (EndOfStreamException e)
-			{
-				ClosePorts();
-				break;
-	
-			} // catch
-        }
+    	for ( i = 0; i < TimeStampList.size(); i++) {
+    		TimeStampList.get(i);
+    		WriteFilterOutputPort(databyte,0);
+    		byteswritten++;
+		}
+    	
+		ClosePorts();	
 
    } // run
 
