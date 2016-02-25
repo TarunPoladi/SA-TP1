@@ -23,12 +23,12 @@ package system;
 public class Merger extends FilterFramework
 {
 	private int inputs;
-	
+
 	Merger (int inputs){
 		super(inputs,1);
 		this.inputs = inputs;
 	}
-	
+
 	public void run()
     {
 
@@ -49,15 +49,14 @@ public class Merger extends FilterFramework
 
 			try
 			{
-				// Splitters only have one input port
-				databyte = ReadFilterInputPort(0);
-				bytesread++;
-				
+				// Merge all
 				// Write data to each output
 				for (int i = 0; i < inputs; i++) {
+					databyte = ReadFilterInputPort(i);
 					WriteFilterOutputPort(databyte,i);
 				}
 
+				bytesread++;
 				byteswritten++;
 
 			} // try
