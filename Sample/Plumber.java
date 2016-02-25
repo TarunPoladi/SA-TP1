@@ -27,7 +27,7 @@ public class Plumber
 		****************************************************************************/
 
 		SourceFilter Filter1 = new SourceFilter();
-		MiddleFilter2 Filter2 = new MiddleFilter2();
+		AltitudeFilter Filter2 = new AltitudeFilter();
 		SinkFilter Filter3 = new SinkFilter();
 
 		/****************************************************************************

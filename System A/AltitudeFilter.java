@@ -86,7 +86,7 @@ public class AltitudeFilter extends FilterFramework
 				}// if
 
 
-				if ( id == 3 ){
+				if ( id == 2 ){
 
 					measurement = transformAltitude(measurement);
 				
