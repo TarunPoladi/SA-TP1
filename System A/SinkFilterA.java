@@ -27,7 +27,7 @@ public class SinkFilterA extends FilterFramework {
      * @param input: Number of input ports
      * @param output: Number of output ports
      */
-    SinkFilter(int input, int output) {
+    SinkFilterA(int input, int output) {
         super(input, output);
     }
 
