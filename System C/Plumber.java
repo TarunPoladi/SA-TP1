@@ -17,8 +17,11 @@ public class Plumber {
          * input ports of the filter and another integer type as the number of output ports of the
          * filter.
          */
-
-        
+        SourceFilterA sourceA = new SourceFilterA(0, 1);
+        SourceFilterB sourceB = new SourceFilterB(0, 1);
+        MergerC merger = new MergerC(2, 1);
+        SortFilter sort = new SortFilter(1, 1);
+        SinkFilterC sink = new SinkFilterC(1, 0);
 
         /**
          * Here we connect the filters starting with the last filter (the sink filter) and
@@ -30,13 +33,21 @@ public class Plumber {
          * of filter1 is going to be connected to the output port number 0 of filter2.
          */
 
-
+        sink.Connect(0, sort, 0);
+        sort.Connect(0, merger, 0);
+        merger.Connect(0, sourceA, 0);
+        merger.Connect(1, sourceB, 0);
 
 
         /**
          * Here we start the filters up. All-in-all,... its really kind of boring.
          */
-
+        
+        sourceA.start();
+        sourceB.start();
+        merger.start();
+        sort.start();
+        sink.start();
 
 
     } // main
