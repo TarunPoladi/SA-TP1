@@ -19,6 +19,9 @@
 ******************************************************************************************************************/
 
 import java.util.*;                     // This class is used to interpret time words
+
+import FilterFramework.EndOfStreamException;
+
 import java.text.SimpleDateFormat;      // This class is used to format and write time in a string format.
 
 public class SortFilter extends FilterFramework
@@ -117,10 +120,21 @@ public class SortFilter extends FilterFramework
         // Sort
         Collections.sort(TimeStampList);
 
-        
-        //Send
-        WriteFilterOutputPort(databyte,0);
-        byteswritten++;
+        // Send bytes to next entity
+        while (true) {
+	        try {
+	        	
+	            WriteFilterOutputPort(databyte,0);
+	            byteswritten++;
+	        }
+	        
+	        catch (EndOfStreamException e)
+			{
+				ClosePorts();
+				break;
+	
+			} // catch
+        }
 
    } // run
 
