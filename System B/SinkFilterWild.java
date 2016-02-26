@@ -27,7 +27,7 @@ public class SinkFilterWild extends FilterFramework {
      * @param input: Number of input ports
      * @param output: Number of output ports
      */
-    SinkFilter(int input, int output) {
+    SinkFilterWild(int input, int output) {
         super(input, output);
     }
 

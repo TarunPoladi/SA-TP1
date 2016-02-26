@@ -80,9 +80,8 @@ public class MergerB extends FilterFramework {
 
                 /**
                  * Store the frame and its id's.
-                 * In this case we store the transformed temperature from the input port number 1,
-                 * the Altitude from the input port number 0 and the Pressure from the input port
-                 * number 2.
+                 * In this case we store the transformed temperature from the input port number 1
+                 * and the Altitude from the input port number 0.
                  */
                 if (id[0] == 0) {
                     frameId[0] = id[0];
@@ -99,9 +98,9 @@ public class MergerB extends FilterFramework {
                     frame[2] = measurement[0];
 
                 }
-                if (id[2] == 3) {
-                    frameId[3] = id[2];
-                    frame[3] = measurement[2];
+                if (id[0] == 3) {
+                    frameId[3] = id[0];
+                    frame[3] = measurement[0];
 
                 }
                 if (id[1] == 4) {
