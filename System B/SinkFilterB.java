@@ -27,7 +27,7 @@ public class SinkFilterB extends FilterFramework {
      * @param input: Number of input ports
      * @param output: Number of output ports
      */
-    SinkFilter(int input, int output) {
+    SinkFilterB(int input, int output) {
         super(input, output);
     }
 
@@ -59,6 +59,7 @@ public class SinkFilterB extends FilterFramework {
         double altitude = 0;                // This is the variable to store the altitude
         double pressure = 0;                // This is the variable to store the pressure
         PrintWriter out = null;             // This is the file printer reference
+        boolean isWildPoint = false;        // This is the varialbe to tell if there is a wild point
 
         /**
          * Initialize the printer to write to the specified file name
@@ -134,13 +135,18 @@ public class SinkFilterB extends FilterFramework {
                 // Catch pressure and write to file
                 if(id == 3){
                     pressure = Double.longBitsToDouble(measurement);
+                    isWildPoint = ReadFilterInputPort(0) != 0;
                 }
 
                 // Catch temperature and write to file
                 if (id == 4) {
                     temperature = Double.longBitsToDouble(measurement);
 
-                    out.println(TimeStampFormat.format(TimeStamp.getTime()) + "\t" + tempFormat.format(temperature) + "\t" + altFormat.format(altitude) + "\t" + presFormat.format(pressure));
+                    out.print(TimeStampFormat.format(TimeStamp.getTime()) + "\t" + tempFormat.format(temperature) + "\t" + altFormat.format(altitude) + "\t" + presFormat.format(pressure));
+                    if (isWildPoint)
+                        out.println("*");
+                    else
+                        out.println();
 
                 }
             } // try

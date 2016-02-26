@@ -33,7 +33,7 @@ public class Splitter extends FilterFramework {
 
         // Next we write a message to the terminal to let the world know we are alive...
 
-        System.out.print("\n" + this.getName() + "::Splitter Reading ");
+        System.out.println(this.getName() + "::Splitter Reading ");
 
         while (true) {
             /**
@@ -56,7 +56,7 @@ public class Splitter extends FilterFramework {
 
             catch (EndOfStreamException e) {
                 ClosePorts();
-                System.out.print("\n" + this.getName() + "::Splitter Exiting; bytes read: " + bytesread + " bytes written: " + byteswritten);
+                System.out.println(this.getName() + "::Splitter Exiting; bytes read: " + bytesread + " bytes written: " + byteswritten);
                 break;
 
             } // catch
